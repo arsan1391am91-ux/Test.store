@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Store Pro 5.0</title>
+
+<style>
+body{
+font-family:tahoma;
+margin:0;
+background:#f3f3f3;
+transition:0.3s;
+}
+.dark{background:#121212;color:white;}
+header{
+background:#131921;
+color:white;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+}
+.logo{font-size:20px;font-weight:bold;}
+button{
+padding:6px 10px;
+cursor:pointer;
+border:none;
+border-radius:5px;
+}
+input,select{
+padding:6px;
+margin:5px 0;
+width:100%;
+border-radius:5px;
+border:1px solid #ccc;
+}
+.container{padding:20px;}
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+gap:15px;
+}
+.card{
+background:white;
+padding:10px;
+border-radius:10px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+.card:hover{transform:scale(1.03);}
+.dark .card{background:#1e1e1e;}
+.badge{
+background:red;
+color:white;
+padding:3px 7px;
+border-radius:50%;
+font-size:12px;
+}
+.cart{
+position:fixed;
+right:0;
+top:0;
+width:320px;
+height:100%;
+background:white;
+overflow:auto;
+padding:15px;
+box-shadow:-2px 0 10px rgba(0,0,0,0.3);
+display:none;
+}
+.dark .cart{background:#1e1e1e;}
+.admin{
+background:#eee;
+padding:15px;
+margin-top:30px;
+border-radius:10px;
+}
+.dark .admin{background:#222;}
+.star{color:orange;}
+.hidden{display:none;}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">Ultimate Store Pro</div>
+
+<div>
+<button onclick="toggleDark()">🌙</button>
+<button onclick="toggleCart()">🛒 <span id="cartCount" class="badge">0</span></button>
+<button onclick="logout()">خروج</button>
+</div>
+</header>
+
+<div class="container">
+
+<h3>فیلتر و جستجو</h3>
+<input type="text" id="search" placeholder="جستجو..." onkeyup="renderProducts()">
+<input type="number" id="minPrice" placeholder="حداقل قیمت" onkeyup="renderProducts()">
+<input type="number" id="maxPrice" placeholder="حداکثر قیمت" onkeyup="renderProducts()">
+<select id="categoryFilter" onchange="renderProducts()">
+<option value="">همه دسته‌ها</option>
+</select>
+<select id="sortBy" onchange="renderProducts()">
+<option value="">مرتب‌سازی</option>
+<option value="low">ارزان‌ترین</option>
+<option value="high">گران‌ترین</option>
+</select>
+
+<div class="products" id="productList"></div>
+
+<h3>Recommended for You</h3>
+<div class="products" id="recommended"></div>
+
+<div class="admin">
+<h3>پنل ادمین</h3>
+<input id="pName" placeholder="نام">
+<input id="pPrice" type="number" placeholder="قیمت">
+<input id="pStock" type="number" placeholder="موجودی">
+<input id="pCategory" placeholder="دسته">
+<input id="pImage" placeholder="لینک تصویر">
+<button onclick="addProduct()">افزودن</button>
+</div>
+
+</div>
+
+<div class="cart" id="cartBox">
+<h3>سبد خرید</h3>
+<div id="cartItems"></div>
+<p>مالیات: <span id="tax"></span></p>
+<p>ارسال: <span id="shipping"></span></p>
+<p>جمع کل: <span id="total"></span></p>
+
+<input id="discount" placeholder="کد تخفیف">
+<button onclick="applyDiscount()">اعمال</button>
+<button onclick="checkout()">ثبت سفارش</button>
+</div>
+
+<script>
+
+let products=JSON.parse(localStorage.getItem("products"))||[
+{id:1,name:"Laptop",price:2000,stock:5,category:"Electronics",rating:4,image:"https://via.placeholder.com/200"},
+{id:2,name:"Shoes",price:300,stock:8,category:"Fashion",rating:5,image:"https://via.placeholder.com/200"}
+];
+
+let users=JSON.parse(localStorage.getItem("users"))||[];
+let orders=JSON.parse(localStorage.getItem("orders"))||[];
+let cart=[];
+let discountPercent=0;
+
+function saveAll(){
+localStorage.setItem("products",JSON.stringify(products));
+localStorage.setItem("users",JSON.stringify(users));
+localStorage.setItem("orders",JSON.stringify(orders));
+}
+
+function renderCategories(){
+let cats=[...new Set(products.map(p=>p.category))];
+let select=document.getElementById("categoryFilter");
+select.innerHTML='<option value="">همه دسته‌ها</option>';
+cats.forEach(c=>{
+select.innerHTML+=`<option value="${c}">${c}</option>`;
+});
+}
+
+function renderProducts(){
+let list=document.getElementById("productList");
+list.innerHTML="";
+
+let search=document.getElementById("search").value.toLowerCase();
+let min=document.getElementById("minPrice").value;
+let max=document.getElementById("maxPrice").value;
+let cat=document.getElementById("categoryFilter").value;
+let sort=document.getElementById("sortBy").value;
+
+let filtered=products.filter(p=>
+p.name.toLowerCase().includes(search) &&
+(min==""||p.price>=min) &&
+(max==""||p.price<=max) &&
+(cat==""||p.category==cat)
+);
+
+if(sort=="low")filtered.sort((a,b)=>a.price-b.price);
+if(sort=="high")filtered.sort((a,b)=>b.price-a.price);
+
+filtered.forEach(p=>{
+list.innerHTML+=`
+<div class="card">
+<img src="${p.image}" width="100%">
+<h4>${p.name}</h4>
+<p>${p.category}</p>
+<p>⭐ ${p.rating}</p>
+<p>${p.price}$</p>
+<p>${p.stock>0?"In Stock":"Out of Stock"}</p>
+<button onclick="addToCart(${p.id})" ${p.stock==0?"disabled":""}>افزودن</button>
+</div>`;
+});
+
+renderRecommended();
+}
+
+function renderRecommended(){
+let box=document.getElementById("recommended");
+box.innerHTML="";
+products.slice(0,2).forEach(p=>{
+box.innerHTML+=`
+<div class="card">
+<h4>${p.name}</h4>
+<p>${p.price}$</p>
+</div>`;
+});
+}
+
+function addToCart(id){
+let p=products.find(x=>x.id==id);
+if(p.stock<=0)return;
+let item=cart.find(x=>x.id==id);
+if(item)item.qty++;
+else cart.push({id,qty:1});
+p.stock--;
+updateCart();
+saveAll();
+renderProducts();
+}
+
+function updateCart(){
+let box=document.getElementById("cartItems");
+box.innerHTML="";
+let total=0;
+
+cart.forEach(item=>{
+let p=products.find(x=>x.id==item.id);
+let price=p.price*item.qty;
+total+=price;
+
+box.innerHTML+=`
+<div>
+${p.name} x${item.qty}
+<button onclick="removeFromCart(${item.id})">❌</button>
+</div>`;
+});
+
+let tax=total*0.1;
+let shipping=total>1000?0:50;
+total=total+tax+shipping-(total*discountPercent/100);
+
+document.getElementById("tax").innerText=tax;
+document.getElementById("shipping").innerText=shipping;
+document.getElementById("total").innerText=total;
+document.getElementById("cartCount").innerText=cart.length;
+}
+
+function removeFromCart(id){
+let item=cart.find(x=>x.id==id);
+let p=products.find(x=>x.id==id);
+p.stock+=item.qty;
+cart=cart.filter(x=>x.id!=id);
+updateCart();
+saveAll();
+renderProducts();
+}
+
+function applyDiscount(){
+let code=document.getElementById("discount").value;
+if(code=="OFF10")discountPercent=10;
+else if(code=="OFF20")discountPercent=20;
+else discountPercent=0;
+updateCart();
+}
+
+function checkout(){
+if(cart.length==0)return alert("سبد خالیه");
+orders.push({
+items:cart,
+status:"Pending",
+date:new Date().toLocaleString(),
+total:document.getElementById("total").innerText
+});
+cart=[];
+discountPercent=0;
+updateCart();
+saveAll();
+alert("سفارش ثبت شد");
+}
+
+function addProduct(){
+products.push({
+id:Date.now(),
+name:pName.value,
+price:parseInt(pPrice.value),
+stock:parseInt(pStock.value),
+category:pCategory.value,
+rating:4,
+image:pImage.value||"https://via.placeholder.com/200"
+});
+saveAll();
+renderCategories();
+renderProducts();
+}
+
+function toggleCart(){
+let c=document.getElementById("cartBox");
+c.style.display=c.style.display=="block"?"none":"block";
+}
+
+function toggleDark(){
+document.body.classList.toggle("dark");
+}
+
+function logout(){
+alert("خروج انجام شد (شبیه‌سازی)");
+}
+
+renderCategories();
+renderProducts();
+updateCart();
+
+</script>
+</body>
+</html>
