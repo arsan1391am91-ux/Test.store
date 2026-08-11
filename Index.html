@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>TexaFlow | تکسافلو - بازار خدمات دیجیتال</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #0F6EFF;
+      --primary-light: #e8f1ff;
+      --primary-dark: #0a52c0;
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --surface-alt: #f1f5f9;
+      --text: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.03);
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
+      --radius-sm: 10px;
+      --radius: 14px;
+      --radius-lg: 20px;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --star: #fbbf24;
+    }
+
+    body.dark {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-alt: #1e293b;
+      --text: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+      --shadow: 0 4px 12px rgba(0,0,0,0.3);
+      --shadow-lg: 0 8px 30px rgba(0,0,0,0.4);
+    }
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background var(--transition), color var(--transition);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    input, textarea, select { font-family: inherit; }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      background: rgba(var(--bg-rgb, 255,255,255), 0.85);
+      transition: box-shadow var(--transition);
+    }
+    body.dark .header { background: rgba(15, 23, 42, 0.9); }
+    .header.scrolled { box-shadow: var(--shadow); }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      gap: 16px;
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .logo i { font-size: 1.7rem; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .nav-links a, .nav-links button {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+    .nav-links a:hover, .nav-links button:hover { background: var(--surface); color: var(--text); }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: all var(--transition);
+      position: relative;
+      font-size: 1.2rem;
+    }
+    .icon-btn:hover { background: var(--surface); color: var(--text); }
+    .badge {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: var(--danger);
+      color: white;
+      font-size: 0.65rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    .btn {
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(15,110,255,0.3);
+    }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-outline {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      background: transparent;
+    }
+    .btn-outline:hover { background: var(--primary-light); }
+    .btn-ghost { color: var(--text-secondary); }
+    .btn-ghost:hover { background: var(--surface); }
+    .hamburger { display: none; }
+
+    @media (max-width: 1024px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .header-actions .icon-btn.hide-mobile { display: none; }
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 320px;
+      height: 100%;
+      background: var(--bg);
+      z-index: 200;
+      box-shadow: var(--shadow-lg);
+      transition: right var(--transition);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a, .mobile-menu button {
+      display: block;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      color: var(--text);
+      text-align: right;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 150;
+      display: none;
+    }
+    .overlay.show { display: block; }
+
+    /* Hero */
+    .hero {
+      padding: 60px 0 40px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .hero-text { flex: 1; min-width: 280px; }
+    .hero-text h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+    .hero-text p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+    .hero-visual {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .hero-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-lg);
+      width: 140px;
+      text-align: center;
+    }
+    .hero-card i { font-size: 2rem; color: var(--primary); margin-bottom: 8px; }
+    .hero-card .stat { font-weight: 800; font-size: 1.3rem; }
+    .hero-card .label { font-size: 0.8rem; color: var(--text-muted); }
+
+    @media (max-width: 768px) {
+      .hero-text h1 { font-size: 2rem; }
+      .hero { padding: 30px 0; }
+    }
+
+    /* Search */
+    .search-section { margin: 20px 0 40px; }
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--surface);
+      border-radius: 60px;
+      padding: 6px 6px 6px 20px;
+      box-shadow: var(--shadow);
+      border: 2px solid transparent;
+      transition: all var(--transition);
+    }
+    .search-box:focus-within { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(15,110,255,0.1); }
+    .search-box input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 14px 8px;
+      font-size: 1rem;
+      outline: none;
+      color: var(--text);
+    }
+    .search-box button {
+      background: var(--primary);
+      color: white;
+      border-radius: 50px;
+      padding: 12px 28px;
+      font-weight: 600;
+    }
+    .quick-searches { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+    .quick-searches span {
+      background: var(--surface);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .quick-searches span:hover { background: var(--primary-light); color: var(--primary); }
+
+    /* Categories */
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .category-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 20px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition);
+      border: 2px solid transparent;
+    }
+    .category-card:hover, .category-card.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      transform: translateY(-3px);
+    }
+    .category-card i { font-size: 2rem; color: var(--primary); margin-bottom: 8px; }
+    .category-card .name { font-weight: 600; font-size: 0.9rem; }
+    .category-card .count { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* Filters */
+    .filters-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 24px;
+      background: var(--surface);
+      padding: 16px;
+      border-radius: var(--radius);
+    }
+    .filter-select, .sort-select {
+      padding: 10px 16px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+      cursor: pointer;
+    }
+    .price-range { display: flex; align-items: center; gap: 8px; }
+    .price-range input { width: 90px; }
+    .clear-filters { color: var(--danger); font-weight: 600; cursor: pointer; }
+
+    /* Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .service-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition);
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .service-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+    .service-card .thumb {
+      height: 180px;
+      background: var(--surface-alt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: var(--primary);
+      position: relative;
+    }
+    .service-card .fav-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: white;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      color: var(--text-muted);
+      transition: all var(--transition);
+    }
+    .service-card .fav-btn.active { color: #ef4444; }
+    .service-card .body { padding: 16px; }
+    .service-card .provider {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .service-card .provider img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--surface-alt);
+    }
+    .service-card .title { font-weight: 700; font-size: 1.1rem; margin-bottom: 6px; }
+    .service-card .meta { display: flex; justify-content: space-between; color: var(--text-secondary); font-size: 0.85rem; }
+    .service-card .price { font-weight: 700; color: var(--primary); margin-top: 8px; }
+    .rating { display: flex; align-items: center; gap: 4px; color: var(--star); font-weight: 600; }
+
+    /* Modals */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal.show { display: flex; }
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+    }
+    .modal-content {
+      position: relative;
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    @media (max-width: 600px) {
+      .modal-content { padding: 20px; }
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .toast {
+      background: var(--text);
+      color: var(--bg);
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+    /* Dashboard */
+    .dashboard-layout {
+      display: flex;
+      gap: 24px;
+      margin: 24px 0;
+    }
+    .sidebar {
+      width: 260px;
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .sidebar a, .sidebar button {
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all var(--transition);
+    }
+    .sidebar a:hover, .sidebar button:hover, .sidebar a.active { background: var(--primary-light); color: var(--primary); }
+    .main-content { flex: 1; min-width: 0; }
+    @media (max-width: 768px) {
+      .dashboard-layout { flex-direction: column; }
+      .sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
+    }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .stat-card { background: var(--surface); padding: 20px; border-radius: var(--radius); }
+    .stat-card .value { font-size: 1.8rem; font-weight: 800; }
+    .stat-card .label { color: var(--text-muted); }
+
+    /* Skeleton */
+    .skeleton { background: var(--surface-alt); border-radius: var(--radius); animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+    /* Footer */
+    .footer {
+      background: var(--surface);
+      padding: 40px 0;
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+    }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px; }
+    .footer-col h4 { margin-bottom: 12px; }
+    .footer-col a { display: block; color: var(--text-secondary); padding: 4px 0; font-size: 0.9rem; }
+
+    .hidden { display: none !important; }
+    .flex { display: flex; }
+    .gap-2 { gap: 8px; }
+    .mt-2 { margin-top: 16px; }
+    .mb-2 { margin-bottom: 16px; }
+    .text-center { text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+  <div class="mobile-menu" id="mobileMenu"></div>
+
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <div class="logo" onclick="navigate('home')"><i class="fas fa-cubes"></i> TexaFlow</div>
+      <nav class="nav-links" id="navLinks"></nav>
+      <div class="header-actions">
+        <button class="icon-btn hide-mobile" onclick="navigate('search')" aria-label="جستجو"><i class="fas fa-search"></i></button>
+        <button class="icon-btn" id="themeToggle" aria-label="تغییر تم"><i class="fas fa-moon"></i></button>
+        <button class="icon-btn" onclick="navigate('favorites')" aria-label="علاقه‌مندی"><i class="fas fa-heart"></i><span class="badge hidden" id="favBadge">0</span></button>
+        <button class="icon-btn" onclick="navigate('notifications')" aria-label="اعلان‌ها"><i class="fas fa-bell"></i><span class="badge hidden" id="notifBadge">0</span></button>
+        <button class="btn btn-outline hide-mobile" onclick="navigate('login')">ورود</button>
+        <button class="btn btn-primary hide-mobile" onclick="navigate('register')">ثبت‌نام</button>
+        <button class="icon-btn hamburger" onclick="toggleMobileMenu()" aria-label="منو"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="app" class="container"></main>
+
+  <footer class="footer" id="footer">
+    <div class="container footer-grid">
+      <div class="footer-col"><h4>TexaFlow</h4><p style="color:var(--text-secondary);font-size:0.9rem;">بازار حرفه‌ای خدمات دیجیتال</p></div>
+      <div class="footer-col"><h4>خدمات</h4><a href="#">طراحی سایت</a><a href="#">برنامه‌نویسی</a><a href="#">سئو</a><a href="#">گرافیک</a></div>
+      <div class="footer-col"><h4>راهنما</h4><a href="#" onclick="navigate('faq')">سوالات متداول</a><a href="#" onclick="navigate('how')">نحوه کار</a><a href="#" onclick="navigate('about')">درباره ما</a></div>
+      <div class="footer-col"><h4>پشتیبانی</h4><a href="#" onclick="navigate('contact')">تماس با ما</a><a href="#">قوانین</a><a href="#">حریم خصوصی</a></div>
+    </div>
+    <div class="container text-center mt-2" style="color:var(--text-muted);">© 2026 TexaFlow | تکسافلو</div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <div class="modal" id="modal"><div class="modal-backdrop" onclick="closeModal()"></div><div class="modal-content" id="modalContent"></div></div>
+
+  <script>
+    (function() {
+      // ==================== DATA ====================
+      const categories = [
+        { id: 'web', name: 'طراحی سایت', icon: 'fa-globe', count: 42 },
+        { id: 'programming', name: 'برنامه‌نویسی', icon: 'fa-code', count: 38 },
+        { id: 'uiux', name: 'طراحی UI/UX', icon: 'fa-pen-ruler', count: 29 },
+        { id: 'seo', name: 'سئو', icon: 'fa-chart-line', count: 25 },
+        { id: 'content', name: 'تولید محتوا', icon: 'fa-pen-fancy', count: 33 },
+        { id: 'graphic', name: 'طراحی گرافیک', icon: 'fa-paintbrush', count: 31 },
+        { id: 'video', name: 'تدوین ویدیو', icon: 'fa-video', count: 20 },
+        { id: 'ai', name: 'هوش مصنوعی', icon: 'fa-robot', count: 18 },
+        { id: 'marketing', name: 'دیجیتال مارکتینگ', icon: 'fa-bullhorn', count: 27 },
+        { id: 'app', name: 'اپلیکیشن', icon: 'fa-mobile-screen', count: 22 },
+        { id: 'security', name: 'امنیت', icon: 'fa-shield-halved', count: 15 },
+        { id: 'consulting', name: 'مشاوره', icon: 'fa-comments', count: 19 },
+      ];
+
+      const providers = [
+        { id: 'p1', name: 'امیررضا محمدی', avatar: '👨‍💻', verified: true, rating: 4.9, reviews: 342, orders: 1520, bio: 'متخصص طراحی سایت با ۸ سال تجربه', joinDate: '۱۳۹۸', lastSeen: 'آنلاین' },
+        { id: 'p2', name: 'سارا احمدی', avatar: '👩‍🎨', verified: true, rating: 4.8, reviews: 215, orders: 980, bio: 'طراح UI/UX و گرافیک', joinDate: '۱۳۹۹', lastSeen: '۲ ساعت پیش' },
+        { id: 'p3', name: 'محمد حسینی', avatar: '👨‍🔧', verified: true, rating: 4.7, reviews: 187, orders: 760, bio: 'برنامه‌نویس فول‌استک', joinDate: '۱۳۹۷', lastSeen: 'دیروز' },
+        { id: 'p4', name: 'نازنین رضایی', avatar: '👩‍💼', verified: false, rating: 4.6, reviews: 98, orders: 340, bio: 'متخصص سئو و دیجیتال مارکتینگ', joinDate: '۱۴۰۰', lastSeen: '۳ روز پیش' },
+        { id: 'p5', name: 'علی کریمی', avatar: '👨‍🎓', verified: true, rating: 4.9, reviews: 450, orders: 2100, bio: 'متخصص هوش مصنوعی', joinDate: '۱۳۹۶', lastSeen: 'آنلاین' },
+        { id: 'p6', name: 'مریم نوروزی', avatar: '👩‍🔬', verified: true, rating: 4.5, reviews: 76, orders: 210, bio: 'مشاور امنیت سایبری', joinDate: '۱۴۰۱', lastSeen: 'هفته پیش' },
+      ];
+
+      const services = [
+        { id: 's1', title: 'طراحی سایت فروشگاهی حرفه‌ای', category: 'web', providerId: 'p1', price: 8500000, delivery: '۱۴ روز', rating: 4.9, orders: 210, image: '🛒', features: ['وردپرس', 'ووکامرس', 'درگاه پرداخت'], packages: [{name:'پایه',price:5000000,time:'۱۰ روز',rev:1},{name:'استاندارد',price:8500000,time:'۱۴ روز',rev:3},{name:'پریمیوم',price:15000000,time:'۲۱ روز',rev:5}] },
+        { id: 's2', title: 'طراحی UI/UX اپلیکیشن', category: 'uiux', providerId: 'p2', price: 6200000, delivery: '۱۰ روز', rating: 4.8, orders: 156, image: '📱', features: ['فیگما', 'پروتوتایپ', 'تحویل کد'], packages: [{name:'پایه',price:4000000,time:'۷ روز',rev:1},{name:'استاندارد',price:6200000,time:'۱۰ روز',rev:3}] },
+        { id: 's3', title: 'برنامه‌نویسی React و Next.js', category: 'programming', providerId: 'p3', price: 12000000, delivery: '۲۰ روز', rating: 4.7, orders: 89, image: '⚛️', features: ['React', 'Next.js', 'TypeScript'], packages: [{name:'استاندارد',price:12000000,time:'۲۰ روز',rev:4}] },
+        { id: 's4', title: 'سئو و بهینه‌سازی سایت', category: 'seo', providerId: 'p4', price: 3500000, delivery: '۳۰ روز', rating: 4.6, orders: 320, image: '🔍', features: ['تحقیق کلمات', 'لینک‌سازی', 'گزارش ماهانه'], packages: [{name:'پایه',price:2000000,time:'۱۵ روز',rev:1},{name:'حرفه‌ای',price:3500000,time:'۳۰ روز',rev:3}] },
+        { id: 's5', title: 'تولید محتوای تخصصی', category: 'content', providerId: 'p4', price: 1800000, delivery: '۵ روز', rating: 4.5, orders: 450, image: '✍️', features: ['سئو محور', 'تحقیق', 'بازنویسی'], packages: [{name:'پایه',price:800000,time:'۳ روز',rev:1}] },
+        { id: 's6', title: 'طراحی لوگو و هویت بصری', category: 'graphic', providerId: 'p2', price: 4500000, delivery: '۷ روز', rating: 4.9, orders: 275, image: '🎨', features: ['۳ کانسپت', 'فایل برداری', 'راهنما'], packages: [{name:'پایه',price:2500000,time:'۵ روز',rev:2},{name:'پریمیوم',price:4500000,time:'۷ روز',rev:5}] },
+        { id: 's7', title: 'تدوین ویدیو یوتیوب', category: 'video', providerId: 'p1', price: 2800000, delivery: '۴ روز', rating: 4.7, orders: 130, image: '🎬', features: ['پریمیر', 'افترافکت', 'موسیقی'], packages: [{name:'استاندارد',price:2800000,time:'۴ روز',rev:2}] },
+        { id: 's8', title: 'مدل هوش مصنوعی سفارشی', category: 'ai', providerId: 'p5', price: 25000000, delivery: '۳۰ روز', rating: 4.9, orders: 45, image: '🤖', features: ['پایتون', 'TensorFlow', 'استقرار'], packages: [{name:'تحقیقاتی',price:25000000,time:'۳۰ روز',rev:5}] },
+        { id: 's9', title: 'کمپین دیجیتال مارکتینگ', category: 'marketing', providerId: 'p4', price: 5500000, delivery: '۱۴ روز', rating: 4.6, orders: 190, image: '📊', features: ['گوگل ادز', 'اینستاگرام', 'گزارش'], packages: [{name:'پایه',price:3000000,time:'۱۰ روز',rev:2}] },
+        { id: 's10', title: 'توسعه اپلیکیشن اندروید', category: 'app', providerId: 'p3', price: 18000000, delivery: '۲۵ روز', rating: 4.8, orders: 67, image: '📲', features: ['Kotlin', 'Jetpack', 'فروشگاه'], packages: [{name:'MVP',price:18000000,time:'۲۵ روز',rev:4}] },
+        { id: 's11', title: 'تست نفوذ و امنیت', category: 'security', providerId: 'p6', price: 9500000, delivery: '۱۰ روز', rating: 4.5, orders: 34, image: '🔐', features: ['گزارش کامل', 'رفع آسیب‌پذیری'], packages: [{name:'پایه',price:9500000,time:'۱۰ روز',rev:2}] },
+        { id: 's12', title: 'مشاوره استارتاپی', category: 'consulting', providerId: 'p5', price: 2000000, delivery: '۱ روز', rating: 4.8, orders: 410, image: '💡', features: ['جلسه آنلاین', 'برنامه رشد'], packages: [{name:'یک ساعته',price:2000000,time:'۱ روز',rev:0}] },
+        { id: 's13', title: 'طراحی سایت شرکتی', category: 'web', providerId: 'p1', price: 6500000, delivery: '۱۰ روز', rating: 4.8, orders: 180, image: '🏢', features: ['وردپرس', 'ریسپانسیو'], packages: [{name:'استاندارد',price:6500000,time:'۱۰ روز',rev:3}] },
+        { id: 's14', title: 'برنامه‌نویسی پایتون', category: 'programming', providerId: 'p5', price: 7500000, delivery: '۱۲ روز', rating: 4.9, orders: 95, image: '🐍', features: ['Django', 'FastAPI'], packages: [{name:'پایه',price:7500000,time:'۱۲ روز',rev:3}] },
+        { id: 's15', title: 'طراحی کاتالوگ', category: 'graphic', providerId: 'p2', price: 2200000, delivery: '۵ روز', rating: 4.7, orders: 230, image: '📄', features: ['ایندیزاین', 'چاپ'], packages: [{name:'پایه',price:2200000,time:'۵ روز',rev:2}] },
+        { id: 's16', title: 'مدیریت شبکه‌های اجتماعی', category: 'marketing', providerId: 'p4', price: 4000000, delivery: '۳۰ روز', rating: 4.5, orders: 150, image: '📱', features: ['تقویم محتوا', 'پست'], packages: [{name:'ماهانه',price:4000000,time:'۳۰ روز',rev:1}] },
+        { id: 's17', title: 'ساخت ربات تلگرام', category: 'programming', providerId: 'p3', price: 4500000, delivery: '۷ روز', rating: 4.8, orders: 78, image: '🤖', features: ['پایتون', 'دیتابیس'], packages: [{name:'استاندارد',price:4500000,time:'۷ روز',rev:3}] },
+        { id: 's18', title: 'انیمیشن موشن گرافیک', category: 'video', providerId: 'p2', price: 5200000, delivery: '۸ روز', rating: 4.9, orders: 112, image: '🎥', features: ['افترافکت', 'صداگذاری'], packages: [{name:'پریمیوم',price:5200000,time:'۸ روز',rev:3}] },
+        { id: 's19', title: 'تحلیل داده و گزارش', category: 'ai', providerId: 'p5', price: 6800000, delivery: '۵ روز', rating: 4.7, orders: 55, image: '📈', features: ['پایتون', 'Power BI'], packages: [{name:'تحلیل',price:6800000,time:'۵ روز',rev:2}] },
+        { id: 's20', title: 'مشاوره حقوقی فناوری', category: 'consulting', providerId: 'p6', price: 1500000, delivery: '۱ روز', rating: 4.4, orders: 88, image: '⚖️', features: ['قرارداد', 'مشاوره'], packages: [{name:'مشاوره',price:1500000,time:'۱ روز',rev:0}] },
+      ];
+
+      // ==================== STATE ====================
+      const state = {
+        currentView: 'home',
+        currentUser: null,
+        theme: 'light',
+        favorites: [],
+        orders: [],
+        messages: [],
+        notifications: [
+          {id:'n1',text:'سفارش شما ثبت شد ✅',read:false,date:'همین الان'},
+          {id:'n2',text:'متخصص پیام جدید ارسال کرد 💬',read:false,date:'۱۰ دقیقه پیش'},
+          {id:'n3',text:'تخفیف ۲۰٪ برای خدمات سئو فعال شد 🎉',read:true,date:'دیروز'},
+        ],
+        searchQuery: '',
+        activeCategory: null,
+        sortBy: 'popular',
+        filters: { minPrice: '', maxPrice: '', minRating: '', delivery: '' },
+        modalType: null,
+        modalData: null,
+        isLoading: false,
+      };
+
+      // ==================== UTILITIES ====================
+      const $ = (sel) => document.querySelector(sel);
+      const $$ = (sel) => document.querySelectorAll(sel);
+      const toast = (msg) => {
+        const el = document.createElement('div'); el.className='toast'; el.textContent=msg;
+        $('#toastContainer').appendChild(el);
+        setTimeout(()=>el.remove(),3000);
+      };
+      const formatPrice = (p) => p?.toLocaleString('fa-IR') + ' تومان';
+      const getProvider = (id) => providers.find(p=>p.id===id);
+      const getService = (id) => services.find(s=>s.id===id);
+      const storage = {
+        get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch{return d;} },
+        set(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+      };
+
+      // Load persisted state
+      state.favorites = storage.get('texaflow_favorites', []);
+      state.orders = storage.get('texaflow_orders', []);
+      state.theme = storage.get('texaflow_theme', 'light');
+      state.currentUser = storage.get('texaflow_user', null);
+      if(state.theme==='dark') document.body.classList.add('dark');
+
+      // ==================== ROUTER ====================
+      function navigate(view, data=null) {
+        state.currentView = view;
+        state.modalData = data;
+        state.modalType = null;
+        if(view==='service-detail' && data) {
+          state.modalType = 'service-detail';
+          state.modalData = data;
+          view = 'home';
+        }
+        closeMobileMenu();
+        render();
+        window.scrollTo(0,0);
+        if(view!=='home' || state.modalType) {
+          history.pushState({view,data}, '', `#${view}`);
+        }
+      }
+
+      window.onpopstate = (e) => {
+        if(e.state) { state.currentView = e.state.view; state.modalData = e.state.data; render(); }
+        else { state.currentView='home'; render(); }
+      };
+
+      // ==================== RENDER ENGINE ====================
+      function render() {
+        renderHeader();
+        renderApp();
+        if(state.modalType) renderModal();
+        updateBadges();
+      }
+
+      function renderHeader() {
+        const nav = $('#navLinks');
+        nav.innerHTML = `
+          <a href="#" onclick="navigate('home')" class="${state.currentView==='home'?'active':''}">خانه</a>
+          <a href="#" onclick="navigate('services')">خدمات</a>
+          <a href="#" onclick="navigate('categories')">دسته‌بندی‌ها</a>
+          <a href="#" onclick="navigate('how')">نحوه کار</a>
+          <a href="#" onclick="navigate('providers')">متخصصان</a>
+          <a href="#" onclick="navigate('about')">درباره ما</a>
+          <a href="#" onclick="navigate('faq')">سوالات متداول</a>
+        `;
+        const mobile = $('#mobileMenu');
+        mobile.innerHTML = nav.innerHTML + `<button class="btn btn-primary w-full" onclick="navigate('register');closeMobileMenu()">ثبت‌نام</button>`;
+      }
+
+      function renderApp() {
+        const app = $('#app');
+        if(state.isLoading) { app.innerHTML = '<div class="skeleton" style="height:400px;"></div>'; return; }
+        switch(state.currentView) {
+          case 'home': app.innerHTML = renderHome(); break;
+          case 'services': app.innerHTML = renderServicesPage(); break;
+          case 'dashboard': app.innerHTML = state.currentUser?.role==='provider' ? renderProviderDashboard() : renderUserDashboard(); break;
+          case 'orders': app.innerHTML = renderOrdersPage(); break;
+          case 'favorites': app.innerHTML = renderFavoritesPage(); break;
+          case 'messages': app.innerHTML = renderMessagesPage(); break;
+          case 'notifications': app.innerHTML = renderNotificationsPage(); break;
+          case 'profile': app.innerHTML = renderProfilePage(); break;
+          case 'login': app.innerHTML = renderAuthForm('login'); break;
+          case 'register': app.innerHTML = renderAuthForm('register'); break;
+          case 'about': app.innerHTML = renderAbout(); break;
+          case 'how': app.innerHTML = renderHowItWorks(); break;
+          case 'faq': app.innerHTML = renderFAQ(); break;
+          case 'contact': app.innerHTML = renderContact(); break;
+          case 'providers': app.innerHTML = renderProvidersPage(); break;
+          case 'provider-dashboard': app.innerHTML = renderProviderDashboard(); break;
+          case 'earnings': app.innerHTML = renderEarnings(); break;
+          case 'portfolio': app.innerHTML = renderPortfolio(); break;
+          default: app.innerHTML = renderHome();
+        }
+      }
+
+      function renderHome() {
+        const filtered = getFilteredServices();
+        return `
+          <section class="hero">
+            <div class="hero-text">
+              <h1>خدمات دیجیتال موردنیازت را،<br>سریع و ساده پیدا کن</h1>
+              <p>به هزاران متخصص حرفه‌ای بپیوندید و پروژه‌های خود را با بهترین کیفیت تحویل بگیرید.</p>
+              <div class="flex gap-2">
+                <button class="btn btn-primary" onclick="navigate('services')">مشاهده خدمات</button>
+                <button class="btn btn-outline" onclick="navigate('register')">شروع همکاری</button>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <div class="hero-card"><i class="fas fa-check-circle"></i><div class="stat">۴,۸۵۰+</div><div class="label">پروژه موفق</div></div>
+              <div class="hero-card"><i class="fas fa-users"></i><div class="stat">۱,۲۰۰+</div><div class="label">متخصص</div></div>
+              <div class="hero-card"><i class="fas fa-star"></i><div class="stat">۴.۸</div><div class="label">میانگین امتیاز</div></div>
+            </div>
+          </section>
+          <div class="search-section">
+            <div class="search-box">
+              <input type="text" placeholder="چه خدمتی نیاز داری؟" id="searchInput" oninput="handleSearch(this.value)" value="${state.searchQuery}">
+              <button onclick="navigate('services')"><i class="fas fa-search"></i> جستجو</button>
+            </div>
+            <div class="quick-searches">
+              ${['طراحی سایت','سئو','برنامه‌نویسی','طراحی لوگو','تولید محتوا','هوش مصنوعی','تدوین ویدیو'].map(t=>`<span onclick="state.searchQuery='${t}';navigate('services')">${t}</span>`).join('')}
+            </div>
+          </div>
+          <h2 class="section-title">دسته‌بندی‌ها</h2>
+          <div class="categories-grid">
+            ${categories.map(c=>`<div class="category-card ${state.activeCategory===c.id?'active':''}" onclick="state.activeCategory='${c.id}';state.searchQuery='';navigate('services')"><i class="fas ${c.icon}"></i><div class="name">${c.name}</div><div class="count">${c.count} خدمت</div></div>`).join('')}
+          </div>
+          <div class="flex" style="justify-content:space-between;align-items:center;"><h2 class="section-title">خدمات برتر</h2><button class="btn btn-ghost" onclick="navigate('services')">مشاهده همه →</button></div>
+          <div class="services-grid">
+            ${filtered.slice(0,8).map(s=>renderServiceCard(s)).join('')}
+          </div>
+        `;
+      }
+
+      function renderServiceCard(s) {
+        const p = getProvider(s.providerId);
+        const isFav = state.favorites.includes(s.id);
+        return `
+          <div class="service-card" onclick="navigate('service-detail','${s.id}')">
+            <div class="thumb">${s.image||'📦'}<button class="fav-btn ${isFav?'active':''}" onclick="event.stopPropagation();toggleFavorite('${s.id}')"><i class="fas fa-heart"></i></button></div>
+            <div class="body">
+              <div class="provider"><span>${p?.avatar||'👤'}</span> ${p?.name||'ناشناس'} ${p?.verified?'<i class="fas fa-check-circle" style="color:var(--primary);"></i>':''}</div>
+              <div class="title">${s.title}</div>
+              <div class="meta"><span class="rating"><i class="fas fa-star"></i> ${s.rating}</span><span>${s.orders} سفارش</span></div>
+              <div class="price">از ${formatPrice(s.price)}</div>
+              <div class="meta">تحویل ${s.delivery}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      function getFilteredServices() {
+        let list = [...services];
+        if(state.searchQuery) {
+          const q = state.searchQuery.toLowerCase();
+          list = list.filter(s=> s.title.toLowerCase().includes(q) || s.category.includes(q) || (getProvider(s.providerId)?.name||'').includes(q));
+        }
+        if(state.activeCategory) list = list.filter(s=>s.category===state.activeCategory);
+        if(state.filters.minPrice) list = list.filter(s=>s.price >= +state.filters.minPrice);
+        if(state.filters.maxPrice) list = list.filter(s=>s.price <= +state.filters.maxPrice);
+        if(state.filters.minRating) list = list.filter(s=>s.rating >= +state.filters.minRating);
+        if(state.filters.delivery) list = list.filter(s=>s.delivery.includes(state.filters.delivery));
+        switch(state.sortBy) {
+          case 'newest': break;
+          case 'cheapest': list.sort((a,b)=>a.price-b.price); break;
+          case 'expensive': list.sort((a,b)=>b.price-a.price); break;
+          case 'rating': list.sort((a,b)=>b.rating-a.rating); break;
+          case 'popular': list.sort((a,b)=>b.orders-a.orders); break;
+          default: list.sort((a,b)=>b.orders-a.orders);
+        }
+        return list;
+      }
+
+      function renderServicesPage() {
+        const filtered = getFilteredServices();
+        return `
+          <h2 class="section-title">خدمات</h2>
+          <div class="filters-bar">
+            <select class="filter-select" onchange="state.activeCategory=this.value||null;render()"><option value="">همه دسته‌ها</option>${categories.map(c=>`<option value="${c.id}" ${state.activeCategory===c.id?'selected':''}>${c.name}</option>`).join('')}</select>
+            <select class="filter-select" onchange="state.filters.minRating=this.value||null;render()"><option value="">حداقل امتیاز</option><option value="4.5">۴.۵+</option><option value="4.7">۴.۷+</option><option value="4.9">۴.۹+</option></select>
+            <div class="price-range"><input type="number" placeholder="حداقل قیمت" class="filter-select" onchange="state.filters.minPrice=this.value;render()" value="${state.filters.minPrice||''}"><input type="number" placeholder="حداکثر قیمت" class="filter-select" onchange="state.filters.maxPrice=this.value;render()" value="${state.filters.maxPrice||''}"></div>
+            <select class="sort-select" onchange="state.sortBy=this.value;render()"><option value="popular">محبوب‌ترین</option><option value="newest">جدیدترین</option><option value="cheapest">ارزان‌ترین</option><option value="expensive">گران‌ترین</option><option value="rating">بالاترین امتیاز</option></select>
+            <button class="clear-filters" onclick="state.activeCategory=null;state.filters={};state.sortBy='popular';state.searchQuery='';render()">پاک کردن فیلترها</button>
+          </div>
+          ${filtered.length===0 ? '<div class="text-center" style="padding:60px;"><i class="fas fa-search" style="font-size:3rem;color:var(--text-muted);"></i><p>نتیجه‌ای یافت نشد</p></div>' : `<div class="services-grid">${filtered.map(s=>renderServiceCard(s)).join('')}</div>`}
+        `;
+      }
+
+      function renderModal() {
+        const content = $('#modalContent');
+        if(state.modalType==='service-detail') {
+          const s = getService(state.modalData);
+          if(!s) return closeModal();
+          const p = getProvider(s.providerId);
+          const isFav = state.favorites.includes(s.id);
+          content.innerHTML = `
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <div style="font-size:4rem;text-align:center;">${s.image||'📦'}</div>
+            <h2>${s.title}</h2>
+            <div class="flex gap-2" style="align-items:center;"><span>${p?.avatar} ${p?.name}</span> ${p?.verified?'<i class="fas fa-check-circle" style="color:var(--primary);"></i>':''} <span class="rating"><i class="fas fa-star"></i>${s.rating}</span></div>
+            <p>${s.features.join(' | ')}</p>
+            <h3>پکیج‌ها</h3>
+            <div class="services-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px,1fr));">
+              ${(s.packages||[]).map(pkg=>`<div class="stat-card"><strong>${pkg.name}</strong><div>${formatPrice(pkg.price)}</div><div>⏱ ${pkg.time}</div><div>🔄 ${pkg.rev} بازبینی</div><button class="btn btn-primary mt-2" onclick="startOrder('${s.id}','${pkg.name}')">سفارش</button></div>`).join('')}
+            </div>
+            <div class="flex gap-2 mt-2">
+              <button class="btn btn-outline" onclick="toggleFavorite('${s.id}');closeModal();">${isFav?'❤️ حذف از علاقه‌مندی':'🤍 افزودن به علاقه‌مندی'}</button>
+            </div>
+          `;
+          $('#modal').classList.add('show');
+        } else if(state.modalType==='order') {
+          const {serviceId, packageName} = state.modalData;
+          const s = getService(serviceId);
+          const pkg = s?.packages?.find(p=>p.name===packageName);
+          content.innerHTML = `
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <h2>ثبت سفارش</h2>
+            <p>${s?.title} - ${packageName}</p>
+            <p>قیمت: ${formatPrice(pkg?.price||0)} | تحویل: ${pkg?.time||'---'}</p>
+            <textarea class="filter-select" style="width:100%;min-height:80px;" placeholder="توضیحات پروژه"></textarea>
+            <input class="filter-select" style="width:100%;" placeholder="نام شما" id="orderName">
+            <input class="filter-select" style="width:100%;" placeholder="ایمیل" id="orderEmail">
+            <div class="mt-2"><strong>مبلغ نهایی: ${formatPrice(pkg?.price||0)}</strong></div>
+            <button class="btn btn-primary mt-2" onclick="submitOrder('${serviceId}','${packageName}',pkg?.price||0)">ثبت سفارش</button>
+          `;
+          $('#modal').classList.add('show');
+        }
+      }
+
+      function closeModal() {
+        $('#modal').classList.remove('show');
+        state.modalType = null;
+        state.modalData = null;
+      }
+
+      function startOrder(serviceId, packageName) {
+        if(!state.currentUser) { closeModal(); navigate('login'); toast('لطفاً ابتدا وارد شوید'); return; }
+        state.modalType='order';
+        state.modalData = {serviceId, packageName};
+        renderModal();
+      }
+
+      function submitOrder(sid, pkg, price) {
+        const order = {
+          id: 'ORD-'+Date.now(),
+          serviceId: sid,
+          package: pkg,
+          price: price,
+          status: 'pending',
+          date: new Date().toLocaleDateString('fa-IR'),
+          customer: $('#orderName')?.value||'کاربر',
+        };
+        state.orders.unshift(order);
+        storage.set('texaflow_orders', state.orders);
+        closeModal();
+        toast('سفارش شما ثبت شد ✅');
+        render();
+      }
+
+      function toggleFavorite(sid) {
+        const idx = state.favorites.indexOf(sid);
+        if(idx>-1) { state.favorites.splice(idx,1); toast('از علاقه‌مندی حذف شد'); }
+        else { state.favorites.push(sid); toast('به علاقه‌مندی اضافه شد'); }
+        storage.set('texaflow_favorites', state.favorites);
+        render();
+      }
+
+      function handleSearch(val) {
+        state.searchQuery = val;
+        render();
+      }
+
+      // ==================== OTHER PAGES ====================
+      function renderUserDashboard() {
+        return `<div class="dashboard-layout">
+          <div class="sidebar">${dashboardSidebar()}</div>
+          <div class="main-content">
+            <h2>سلام ${state.currentUser?.name||'کاربر'} 👋</h2>
+            <div class="stats-grid">
+              <div class="stat-card"><div class="value">${state.orders.length}</div><div class="label">کل سفارش‌ها</div></div>
+              <div class="stat-card"><div class="value">${state.orders.filter(o=>o.status==='pending'||o.status==='active').length}</div><div class="label">فعال</div></div>
+              <div class="stat-card"><div class="value">${state.orders.filter(o=>o.status==='completed').length}</div><div class="label">تکمیل شده</div></div>
+            </div>
+            <h3>سفارش‌های اخیر</h3>
+            ${state.orders.slice(0,5).map(o=>`<div class="stat-card flex" style="justify-content:space-between;"><span>${o.id}</span><span>${getService(o.serviceId)?.title||''}</span><span>${formatPrice(o.price)}</span><span>${o.status}</span></div>`).join('')||'<p>سفارشی ندارید</p>'}
+          </div>
+        </div>`;
+      }
+
+      function renderProviderDashboard() {
+        return `<div class="dashboard-layout">
+          <div class="sidebar">${dashboardSidebar()}</div>
+          <div class="main-content">
+            <h2>داشبورد متخصص</h2>
+            <div class="stats-grid">
+              <div class="stat-card"><div class="value">${state.orders.length}</div><div class="label">سفارش‌ها</div></div>
+              <div class="stat-card"><div class="value">${formatPrice(state.orders.reduce((s,o)=>s+(o.price||0),0))}</div><div class="label">درآمد کل</div></div>
+              <div class="stat-card"><div class="value">۴.۸</div><div class="label">امتیاز</div></div>
+            </div>
+          </div>
+        </div>`;
+      }
+
+      function dashboardSidebar() {
+        const isProvider = state.currentUser?.role==='provider';
+        return `
+          <a href="#" onclick="navigate('dashboard')" class="active">🏠 داشبورد</a>
+          <a href="#" onclick="navigate('orders')">📋 سفارش‌ها</a>
+          <a href="#" onclick="navigate('favorites')">❤️ علاقه‌مندی</a>
+          <a href="#" onclick="navigate('messages')">💬 پیام‌ها</a>
+          <a href="#" onclick="navigate('notifications')">🔔 اعلان‌ها</a>
+          ${isProvider?`<a href="#" onclick="navigate('portfolio')">🖼 نمونه‌کارها</a><a href="#" onclick="navigate('earnings')">💰 درآمد</a>`:''}
+          <a href="#" onclick="navigate('profile')">👤 پروفایل</a>
+          <button onclick="logout()">🚪 خروج</button>
+        `;
+      }
+
+      function renderOrdersPage() {
+        return `<h2>سفارش‌های من</h2>
+        <div class="flex gap-2 mb-2">${['همه','pending','active','completed','cancelled'].map(s=>`<button class="btn btn-ghost" onclick="state.orderFilter='${s==='همه'?'':'${s}'}';render()">${s==='همه'?'همه':s}</button>`).join('')}</div>
+        ${state.orders.length===0?'<p>سفارشی ندارید</p>':state.orders.map(o=>`<div class="stat-card flex" style="justify-content:space-between;"><span>${o.id}</span><span>${formatPrice(o.price)}</span><span>${o.status}</span><span>${o.date}</span></div>`).join('')}`;
+      }
+
+      function renderFavoritesPage() {
+        const favs = services.filter(s=>state.favorites.includes(s.id));
+        return `<h2>علاقه‌مندی‌ها</h2>${favs.length===0?'<p>موردی پیدا نشد 💔</p>':`<div class="services-grid">${favs.map(s=>renderServiceCard(s)).join('')}</div>`}`;
+      }
+
+      function renderMessagesPage() {
+        return `<h2>پیام‌ها</h2><p>پیام جدیدی ندارید 💬</p>`;
+      }
+
+      function renderNotificationsPage() {
+        return `<h2>اعلان‌ها</h2>${state.notifications.map(n=>`<div class="stat-card">${n.read?'':'🔵'} ${n.text} <small>${n.date}</small></div>`).join('')}`;
+      }
+
+      function renderProfilePage() {
+        return `<h2>پروفایل</h2><p>نام: ${state.currentUser?.name||'---'}</p><p>ایمیل: ${state.currentUser?.email||'---'}</p>`;
+      }
+
+      function renderAuthForm(type) {
+        return `<div style="max-width:400px;margin:40px auto;"><h2>${type==='login'?'ورود':'ثبت‌نام'}</h2>
+          <input class="filter-select" style="width:100%;" placeholder="ایمیل" id="authEmail">
+          <input class="filter-select" style="width:100%;" type="password" placeholder="رمز عبور" id="authPass">
+          ${type==='register'?`<input class="filter-select" style="width:100%;" placeholder="نام" id="authName"><select class="filter-select" style="width:100%;" id="authRole"><option value="customer">مشتری</option><option value="provider">متخصص</option></select>`:''}
+          <button class="btn btn-primary mt-2" onclick="${type==='login'?'loginUser':'registerUser'}()">${type==='login'?'ورود':'ثبت‌نام'}</button>
+        </div>`;
+      }
+
+      function loginUser() {
+        state.currentUser = {name:'کاربر تست',email:$('#authEmail')?.value||'test@test.com',role:'customer'};
+        storage.set('texaflow_user',state.currentUser);
+        toast('خوش آمدید!');
+        navigate('dashboard');
+      }
+      function registerUser() {
+        state.currentUser = {name:$('#authName')?.value||'کاربر جدید',email:$('#authEmail')?.value,role:$('#authRole')?.value||'customer'};
+        storage.set('texaflow_user',state.currentUser);
+        toast('ثبت‌نام موفق!');
+        navigate('dashboard');
+      }
+      function logout() {
+        state.currentUser = null;
+        storage.set('texaflow_user',null);
+        toast('خارج شدید');
+        navigate('home');
+      }
+
+      function renderAbout() { return `<h2>درباره TexaFlow</h2><p>تکسافلو پلتفرم حرفه‌ای خدمات دیجیتال با بیش از ۱۲۰۰ متخصص و ۴۸۵۰ پروژه موفق.</p>`; }
+      function renderHowItWorks() { return `<h2>نحوه کار</h2><p>۱. جستجو ۲. مقایسه ۳. سفارش ۴. دریافت</p>`; }
+      function renderFAQ() { return `<h2>سوالات متداول</h2><p>سوالات رایج درباره سفارش، پرداخت و پشتیبانی.</p>`; }
+      function renderContact() { return `<h2>تماس با ما</h2><input class="filter-select" style="width:100%;" placeholder="پیام"><button class="btn btn-primary mt-2" onclick="toast('پیام ارسال شد')">ارسال</button>`; }
+      function renderProvidersPage() { return `<h2>متخصصان</h2><div class="services-grid">${providers.map(p=>`<div class="stat-card"><strong>${p.avatar} ${p.name}</strong> ${p.verified?'✅':''} ⭐${p.rating}</div>`).join('')}</div>`; }
+      function renderEarnings() { return `<h2>درآمد</h2><div class="stat-card">درآمد کل: ${formatPrice(12500000)}</div>`; }
+      function renderPortfolio() { return `<h2>نمونه‌کارها</h2><p>نمونه‌کارهای خود را مدیریت کنید.</p>`; }
+
+      // ==================== EVENTS ====================
+      function updateBadges() {
+        const favBadge = $('#favBadge');
+        if(favBadge) { favBadge.textContent = state.favorites.length; favBadge.classList.toggle('hidden', state.favorites.length===0); }
+      }
+
+      function toggleMobileMenu() {
+        $('#mobileMenu').classList.toggle('open');
+        $('#overlay').classList.toggle('show');
+      }
+      function closeMobileMenu() {
+        $('#mobileMenu').classList.remove('open');
+        $('#overlay').classList.remove('show');
+      }
+      window.toggleMobileMenu = toggleMobileMenu;
+      window.closeMobileMenu = closeMobileMenu;
+
+      document.addEventListener('click', (e) => {
+        if(e.target === $('#overlay')) { closeMobileMenu(); closeModal(); }
+      });
+      document.addEventListener('keydown', (e) => {
+        if(e.key==='Escape') { closeModal(); closeMobileMenu(); }
+      });
+
+      $('#themeToggle').addEventListener('click', ()=>{
+        document.body.classList.toggle('dark');
+        state.theme = document.body.classList.contains('dark')?'dark':'light';
+        storage.set('texaflow_theme', state.theme);
+      });
+
+      // Expose to window for onclick handlers
+      window.navigate = navigate;
+      window.closeModal = closeModal;
+      window.toggleFavorite = toggleFavorite;
+      window.startOrder = startOrder;
+      window.submitOrder = submitOrder;
+      window.handleSearch = handleSearch;
+      window.loginUser = loginUser;
+      window.registerUser = registerUser;
+      window.logout = logout;
+      window.toast = toast;
+      window.render = render;
+
+      // Init
+      render();
+    })();
+  </script>
+</body>
+</html>
